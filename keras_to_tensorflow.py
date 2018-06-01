@@ -92,6 +92,8 @@ from keras.models import load_model
 import tensorflow as tf
 from pathlib import Path
 from keras import backend as K
+from keras.utils.generic_utils import CustomObjectScope
+from keras.applications.mobilenet import relu6, DepthwiseConv2D
 
 output_fld =  args.input_fld if args.output_fld == '' else args.output_fld
 if args.output_model_file == '':
@@ -111,7 +113,8 @@ else:
     K.set_image_data_format('channels_last')
 
 try:
-    net_model = load_model(weight_file_path)
+    with CustomObjectScope({'relu6': relu6, 'DepthwiseConv2D': DepthwiseConv2D}):
+        net_model = load_model(weight_file_path)
 except ValueError as err:
     print('''Input file specified ({}) only holds the weights, and not the model defenition.
     Save the model using mode.save(filename.h5) which will contain the network architecture

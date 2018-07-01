@@ -93,7 +93,8 @@ import tensorflow as tf
 from pathlib import Path
 from keras import backend as K
 from keras.utils.generic_utils import CustomObjectScope
-from keras.applications.mobilenet import relu6, DepthwiseConv2D
+from keras.applications.mobilenet import relu6
+from keras.layers.convolutional import DepthwiseConv2D
 
 output_fld =  args.input_fld if args.output_fld == '' else args.output_fld
 if args.output_model_file == '':
